@@ -38,6 +38,7 @@ public class SwaggerConfig {
 
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
+                .groupName("王治方")
                 .enable(flag)    // enable 是否启用swagger如果为false, 则swagger 不能在浏览器中使用
 
                 .select()
@@ -45,6 +46,25 @@ public class SwaggerConfig {
                 .build();
 
     }
+
+    @Bean
+    public Docket dokect1(Environment environment){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("A");
+    }
+
+    @Bean
+    public Docket dokect2(Environment environment){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("B");
+    }
+
+    @Bean
+    public Docket dokect3(Environment environment){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("C");
+    }
+
 
     // 配置swagger信息= apiInfo()
 

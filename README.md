@@ -154,3 +154,119 @@ public Docket dokect(){
     }
 ```
 
+## 配置API文档的分组
+
+.        .groupName("王治方")
+
+```java
+return new Docket(DocumentationType.SWAGGER_2)
+        .apiInfo(apiInfo())
+        .groupName("王治方")
+        .enable(flag)    // enable 是否启用swagger如果为false, 则swagger 不能在浏览器中使用
+
+        .select()
+        .apis(RequestHandlerSelectors.basePackage("com.zf.swagger.controller"))
+        .build();
+```
+
+如何配置多个分组？ 写多个Docket实例即可
+
+```java
+@Bean
+public Docket dokect1(Environment environment){
+    return new Docket(DocumentationType.SWAGGER_2)
+            .groupName("A");
+}
+
+@Bean
+public Docket dokect2(Environment environment){
+    return new Docket(DocumentationType.SWAGGER_2)
+            .groupName("B");
+}
+
+@Bean
+public Docket dokect3(Environment environment){
+    return new Docket(DocumentationType.SWAGGER_2)
+            .groupName("C");
+}
+```
+
+实体类配置-注释
+
+```java
+ @ApiOperation("Hello 控制类")
+@GetMapping("/hello2")
+public String hello2(@ApiParam("用户名") String username){
+  return "hello" + username;
+}
+```
+
+```java
+@ApiModel("用户实体类")
+public class User {
+    @ApiModelProperty("用户名")
+    public String username;
+    @ApiModelProperty("密码")
+    public String password;
+
+
+
+    
+}
+```
+
+```java
+package com.zf.swagger.controller;
+
+
+import com.zf.swagger.pojo.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+
+@RestController
+public class HelloController {
+
+       // /error
+     @GetMapping(value = "/hello")
+     public String hello(){
+       return "Hello world";
+     }
+
+
+     // 只要接口中，返回值存在实体类就会被扫描
+    @PostMapping(value = "/user")
+    public User user(){
+        return new User();
+    }
+
+    @ApiOperation("Hello 控制类")
+   @GetMapping("/hello2")
+   public String hello2(@ApiParam("用户名") String username){
+     return "hello" + username;
+   }
+
+
+    @ApiOperation("Post 测试")
+    @PostMapping("/postt")
+    public User hello2(@ApiParam("用户") User user){
+        return user;
+    }
+
+
+
+}
+```
+
+我们可以通过Swagger给一些难以理解的属性和接口增加注释
+
+接口文档实时更新
+
+可以在线测试
+
