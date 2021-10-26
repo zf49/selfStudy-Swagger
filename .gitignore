@@ -1,0 +1,6 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/sonarlint/
+src/main/resources/static/
+src/main/resources/templates/
+target/generated-sources/
+target/generated-test-sources/
